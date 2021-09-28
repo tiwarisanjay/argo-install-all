@@ -5,13 +5,21 @@
 #------Create NameSpace
 kubectl create namespace argo-events
 #------Install Argo Events
-kubectl -n argo-events apply -f argo-event-yamls/
+for all in `ls -1 argo-event-yamls/*`;do
+	kubectl -n argo-events apply -f $all
+done
+echo "Argo Event Install Done"
+sleep 15
 #--------------
 #ARGO CD
 #=========
 kubectl create namespace argocd
 kubectl apply -n argocd -f argocd-yamls/
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
+echo "User : admin, Password:"
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+echo "Argo CD Install Done"
+sleep 10
 #-----
 #Argo Workflow
 #---------
