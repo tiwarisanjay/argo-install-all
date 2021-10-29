@@ -603,7 +603,7 @@ spec:
       containers:
       - args:
         - server
-        image: quay.io/argoproj/argocli:v3.2.0
+        image: {{ Values.argoWorkflow.argocli.image }}
         name: argo-server
         ports:
         - containerPort: 2746
@@ -649,7 +649,7 @@ spec:
         - --configmap
         - workflow-controller-configmap
         - --executor-image
-        - quay.io/argoproj/argoexec:v3.2.0
+        - {{ .Values.argoWorkflow.argoexec.image }}
         - --namespaced
         - --managed-namespace
         - workflows
@@ -662,7 +662,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.name
-        image: quay.io/argoproj/workflow-controller:v3.2.0
+        image: {{ .Values.argoWorkflow.workflowController.image }}
         livenessProbe:
           failureThreshold: 3
           httpGet:

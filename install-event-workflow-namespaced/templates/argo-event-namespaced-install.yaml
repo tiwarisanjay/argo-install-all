@@ -221,11 +221,11 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: NATS_STREAMING_IMAGE
-          value: nats-streaming:0.22.1
+          value: {{ .Values.argoEvent.nats.image }}
         - name: NATS_METRICS_EXPORTER_IMAGE
-          value: synadia/prometheus-nats-exporter:0.6.2
-        image: quay.io/argoproj/argo-events:v1.4.2
-        imagePullPolicy: Always
+          value: {{ .Values.argoEvent.prometheus.image }}
+        image: {{ .Values.argoEvent.event.image }}
+        imagePullPolicy: {{ .Values.argoEvent.event.imagePullPolicy }}
         livenessProbe:
           httpGet:
             path: /healthz
@@ -265,12 +265,12 @@ spec:
         - --namespaced
         env:
         - name: EVENTSOURCE_IMAGE
-          value: quay.io/argoproj/argo-events:v1.4.2
+          value: {{ .Values.argoEvent.event.image }}
         - name: NAMESPACE
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: quay.io/argoproj/argo-events:v1.4.2
+        image: {{ .Values.argoEvent.event.image }}
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -311,12 +311,12 @@ spec:
         - --namespaced
         env:
         - name: SENSOR_IMAGE
-          value: quay.io/argoproj/argo-events:v1.4.2
+          value: {{ .Values.argoEvent.event.image }}
         - name: NAMESPACE
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: quay.io/argoproj/argo-events:v1.4.2
+        image: {{ .Values.argoEvent.event.image }}
         livenessProbe:
           httpGet:
             path: /healthz
