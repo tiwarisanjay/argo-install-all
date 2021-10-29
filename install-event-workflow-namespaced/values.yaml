@@ -1,0 +1,15 @@
+argoEvent:
+  event:
+    image: argo-events:1.4.2-alpine
+    imagePullPolicy: "Always"
+  prometheus:
+    image: prometheus-nats-exporter:0.6.2-alpine
+  nats:
+    image: nats-streaming:0.22.1-alpine
+argoWorkflow:
+  argocli:
+    image: argocli:3.2.3-alpine
+  argoexec:
+    image: argoexec:3.2.3-alpine
+  workflowController:
+    image: workflow-controller:3.2.3-alpine
